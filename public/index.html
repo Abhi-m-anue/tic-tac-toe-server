@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO Chat</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io(); // Connect to the server
+
+      const createRoom = () => {
+        socket.emit("createNewRoom");
+      };
+
+      const joinRoom = () => {
+        const roomIdInput = document.getElementById("roomIdInput");
+        const id = roomIdInput.value;
+        if (id) {
+          socket.emit("joinRoom", { roomId: id });
+        }
+      };
+
+      socket.on("newGameCreated", (msg) => {
+        const roomIdElement = document.getElementById("roomId");
+        roomIdElement.textContent = `room code : ${msg.gameId}`;
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Socket.IO Chat</h1>
+    <button onclick="createRoom()">create new room</button>
+    <p id="roomId"></p>
+    <p>-------------------</p>
+    <div>
+      <p>Enter room id</p>
+      <input type="number" id="roomIdInput" />
+      <button onclick="joinRoom()">Join room</button>
+    </div>
+  </body>
+</html>

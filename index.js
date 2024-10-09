@@ -5,6 +5,10 @@ const { Server } = require("socket.io");
 
 const app = express();
 // app.use(express.static('public'))
+app.get("/", (req, res) => {
+  res.send("tic tac toe server");
+});
+
 app.use(cors());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
